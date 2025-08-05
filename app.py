@@ -18,5 +18,11 @@ def preprocess(text):
 # Streamlit App
 st.title("Fake News Detector")
 
-input_text = st.text_area("Enter news
+input_text = st.text_area("Enter news article text:")
 
+if st.button("Check"):
+    cleaned = preprocess(input_text)
+    vector = vectorizer.transform([cleaned])
+    prediction = model.predict(vector)[0]
+    result = "REAL" if prediction == 1 else "FAKE"
+    st.success(f"This news is likely: {result}")
